@@ -1,0 +1,15 @@
+.constrained {
+	margin: 5% 8% 0%;
+	overflow-x: hidden;
+	overflow-y: auto;
+	max-height: 50rem;
+	border: 1px solid lightgray;
+	bottom: 5%;
+}
+.table>tbody>tr>td {
+	word-wrap: break-word;
+}
+.table>thead {
+	background-color: antiquewhite;
+}
+html{overflow:hidden}

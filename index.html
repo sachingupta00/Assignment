@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>title</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta name="robots" content="index,follow" />
+	<link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="css/index.css" />
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.11/angular.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ngInfiniteScroll/1.2.2/ng-infinite-scroll.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/floatthead/2.0.3/jquery.floatThead.min.js"></script>
+</head>
+
+<body ng-app="myApp">
+<div ng-controller="appController">
+    <div class="container-fluid">
+		<div class="row">
+		<div class="col-sm-offset-1 col-sm-10 col-md-10">
+			<input ng-model="externalLink" class="form-control" placeholder="Enter the external link for data submition eg. https://requestb.in/1d5h8is1" type="text"/>
+        </div>
+		<div class="col-sm-offset-2 col-sm-10 col-md-10 constrained">
+        <table class="table" id="contentTable" infinite-scroll="loadMore()" infinite-scroll-container='".constrained"' infinite-scroll-distance="1" infinite-scroll-parent="true">
+			<thead>
+				<tr>
+					<th> No. </th>
+					<th> Name </th>
+					<th> Description </th>
+					<th> Owner Nmae</th>
+					<th> Owner Type</th>
+					<th> Edit </th>
+				</tr>
+			<thead>
+			<tbody ng-init="font='pencil'">	
+				<tr data-ng-show="content.length === 0">
+					<td class="center" colspan="5">Oops! There are no repositories. </td>
+				</tr>
+
+				<tr class="" data-ng-repeat="item in contentFilter = (content | limitTo:contentLimit) track by $index">
+						<td> {{$index+1}} </td>
+						<td> 
+							<div ng-hide="edit=={{$index}}">{{item.name}}</div> 
+							<div ng-show="edit=={{$index}}"><input ng-model="form[$index].name" class="form-control" type="text" name="name"/></div> 
+						</td>
+						<td> 
+							<div ng-hide="edit=={{$index}}">{{item.description}}</div> 
+							<div ng-show="edit=={{$index}}"><input ng-model="form[$index].description" class="form-control" type="text" name="description"/></div> 
+						</td>
+						<td> 
+							<div ng-hide="edit=={{$index}}">{{item.owner.login}}</div> 
+							<div ng-show="edit=={{$index}}"><input ng-model="form[$index].owner" class="form-control" type="text" name="owner"/></div> 
+						</td>
+						<td> 
+							<div ng-hide="edit=={{$index}}">{{item.owner.type}}</div> 
+							<div ng-show="edit=={{$index}}"><input ng-model="form[$index].owner_type" class="form-control" type="text" name="owner_type"/></div>
+						</td>
+						<td index="{{$index}}" elId="{{item.id}}"> 
+							<span ng-class = "(edit=={{$index}})?'glyphicon glyphicon-floppy-save':'glyphicon glyphicon-pencil'" aria-hidden="true" ng-click="action(font,$index,item)"></span> 
+							<span ng-show="edit=={{$index}}" class="glyphicon glyphicon-remove" aria-hidden="true" ng-click="action('cancel','$index',item)"></span> 
+						</td>
+				</tr>
+			</tbody>
+        </table>
+    </div>
+    </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/index.js"></script>
+</body>
+</html>
